@@ -1,0 +1,61 @@
+<div class="container">
+
+    <!-- Tabs -->
+    <div class="tab-buttons">
+        <button (click)="activeTab = 'search'" [class.active]="activeTab === 'search'">Search</button>
+        <button (click)="activeTab = 'classify'" [class.active]="activeTab === 'classify'">Classify</button>
+    </div>
+
+    <!-- ========== SEARCH SECTION ========== -->
+    <div *ngIf="activeTab === 'search'" class="search-container">
+        <h1 class="logo">Search</h1>
+        <div class="search-box">
+            <input [(ngModel)]="query" type="text" placeholder="Search publications..." />
+            <button class="search-btn" (click)="onSearch()">Search</button>
+        </div>
+
+        <div *ngIf="loading" class="loading">Loading...</div>
+        <div *ngIf="error" class="error">{{ error }}</div>
+
+        <div class="results">
+            <div *ngFor="let item of results" class="result-item">
+                <h2>
+                    <a [href]="item.link" target="_blank">{{ item.title }}</a>
+                </h2>
+                <p><strong>Authors:</strong> {{ item.authors?.join(', ') }}</p>
+                <p><strong>Year:</strong> {{ item.published_date }}</p>
+
+                <!-- Abstract Preview -->
+                <div class="abstract-box" [class.expanded]="item.showFullAbstract"
+                    (click)="item.showFullAbstract = !item.showFullAbstract">
+                    {{ item.showFullAbstract ? item.abstract : (item.abstract | slice:0:200) + (item.abstract?.length >
+                    200 ? '...' : '') }}
+                </div>
+            </div>
+        </div>
+
+        <div class="pagination" *ngIf="results.length">
+            <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
+            <span>Page {{ currentPage }}</span>
+            <button (click)="nextPage()" [disabled]="!hasMoreResults">Next</button>
+        </div>
+    </div>
+
+    <!-- ========== CLASSIFY SECTION ========== -->
+    <div *ngIf="activeTab === 'classify'" class="classify-container">
+        <h1 class="logo">Classify Document</h1>
+        <div class="classify-box">
+            <textarea [(ngModel)]="classifyText" rows="5" placeholder="Enter text to classify..."></textarea>
+            <button class="classify-btn" (click)="onClassify()">Classify</button>
+        </div>
+
+        <div *ngIf="classifyLoading" class="loading">Classifying...</div>
+        <div *ngIf="classifyError" class="error">{{ classifyError }}</div>
+
+        <div *ngIf="classifyResult" class="classify-result">
+            <p><strong>Predicted Label:</strong> {{ classifyResult.label }}</p>
+            <p><strong>Confidence:</strong> {{ (classifyResult.confidence * 100) | number:'1.0-2' }}%</p>
+        </div>
+    </div>
+
+</div>
