@@ -1,0 +1,41 @@
+{
+  "timestamp": "2025-08-30T19:17:02.381707Z",
+  "labels": [
+    "politics",
+    "business",
+    "health"
+  ],
+  "best_model": "nb",
+  "per_model": {
+    "nb": {
+      "cv": {
+        "cv_f1_macro_mean": 1.0,
+        "cv_acc_mean": 1.0
+      },
+      "heldout": {
+        "f1_macro": 1.0,
+        "accuracy": 1.0
+      }
+    },
+    "lr": {
+      "cv": {
+        "cv_f1_macro_mean": 1.0,
+        "cv_acc_mean": 1.0
+      },
+      "heldout": {
+        "f1_macro": 1.0,
+        "accuracy": 1.0
+      }
+    },
+    "svm": {
+      "cv": {
+        "cv_f1_macro_mean": 1.0,
+        "cv_acc_mean": 1.0
+      },
+      "heldout": {
+        "f1_macro": 1.0,
+        "accuracy": 1.0
+      }
+    }
+  }
+}
